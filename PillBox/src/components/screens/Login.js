@@ -5,6 +5,11 @@ import config from '../../config';
 
 class Login extends Component {
 
+    login() {
+        //Go to Home page
+        this.props.navigation.navigate('home');
+    }
+
     signup() {
         this.props.navigation.navigate('register');
     }
@@ -14,7 +19,6 @@ class Login extends Component {
             <KeyboardAvoidingView style={config.fullLayout}>
                 <Text style={{fontSize: 32}}>Pillbox App</Text>
                 <LoginForm/>
-
                 <TouchableOpacity 
                     onPress={()=> this.signup()}>
                         <Text style={styles.registerText}>New User?</Text>
@@ -25,6 +29,19 @@ class Login extends Component {
 }
 
 const styles = StyleSheet.create({
+    buttons: {
+        height: 55,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+        padding: 10,
+        backgroundColor: config.colors.darkGreen
+    },
+    loginText: {
+        fontSize: 24,
+        color: 'white',
+    },
     registerText: {
         fontSize: 18,
     }
