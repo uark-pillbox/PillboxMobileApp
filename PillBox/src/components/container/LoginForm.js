@@ -3,16 +3,18 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import config from '../../config';
 
 class LoginForm extends Component {
-    state = {
-        username: '',
-        password: '',
-      }
-
-      login() {
-        alert(this.state.username,
-            this.state.password);
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+          };
     }
 
+    login() {
+        alert(this.state.password);
+    }
+    
     render() {
         return (
             <View>
@@ -24,7 +26,7 @@ class LoginForm extends Component {
                         autoCorrect={false}
                         placeholder="Username"
                         value={this.state.username}
-                        onChangeText={username = this.setState({username})}
+                        onChangeText={username => this.setState({username})}
                         autoFocus={true}
                         returnKeyType="next"
                         onSubmitEditing={() => this.passwordInput.focus()}
@@ -38,7 +40,7 @@ class LoginForm extends Component {
                         autoCapitalize="none"
                         ref={(input) => this.passwordInput = input}
                         value={this.state.password}
-                        onChangeText={password = this.setState({password})}
+                        onChangeText={password => this.setState({password})}
                         autoCorrect={false}
                         placeholder="Password"
                         returnKeyType="go"
