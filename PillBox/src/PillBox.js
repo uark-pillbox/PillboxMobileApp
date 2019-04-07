@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Login, Register, Home, Scheduler, Scan } from './components/screens'
+import { LoginForm } from './components/container'
 import { createSwitchNavigator, createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 
 
@@ -11,6 +12,7 @@ const HomeTabs = createBottomTabNavigator({
 
 const SignIn = createStackNavigator({
     login: Login,
+    // loginForm: LoginForm,
     register: Register
 }, {
     initialRouteName: 'login',

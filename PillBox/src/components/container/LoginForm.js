@@ -8,11 +8,46 @@ class LoginForm extends Component {
         this.state = {
             username: '',
             password: '',
+            // isLoading: 'true',
           };
     }
 
     login() {
+        // return fetch('https://facebook.github.io/react-native/movies.json')
+        // .then((response) => response.json())
+        // .then((responseJson) => {
+
+        //     this.setState({
+        //     isLoading: false,
+        //     dataSource: responseJson.movies,
+        //     }, function(){
+
+        //     });
+
+        // })
+        // .catch((error) =>{
+        //     console.error(error);
+        // });
+
+        // fetch('https://mywebsite.com/endpoint/', {
+        //     method: 'POST',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         username: this.state.username,
+        //         password: this.state.password,
+        //     }),
+        // });
+
+
+
+        // Figure out how to get the response from the fetch after the credentials are passed to the server
+        // Then, if valid, go to the "home" page
+        // If invalid need to reload LoginForm? Alert that the information was invalid?
         alert(this.state.password);
+        this.props.navigation.navigate('home');
     }
     
     render() {
@@ -44,6 +79,7 @@ class LoginForm extends Component {
                         autoCorrect={false}
                         placeholder="Password"
                         returnKeyType="go"
+                        onSubmitEditing={() => this.login()}
                         secureTextEntry
                     />
                     
@@ -79,7 +115,11 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 10,
         backgroundColor: config.colors.darkGreen
-    }
+    },
+    loginText: {
+        fontSize: 24,
+        color: 'white',
+    },
 });
 
 export default LoginForm;
