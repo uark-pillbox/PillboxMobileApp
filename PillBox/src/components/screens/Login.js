@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TextInput, Button } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text, TouchableOpacity, TextInput, Button, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { LoginForm } from '../container';
+import config from '../../config';
 
 class Login extends Component {
 
@@ -14,19 +16,41 @@ class Login extends Component {
 
     render() {
         return (
-            <View style={{height:100+'%', width:100+'%', flex:1,justifyContent:'center', alignItems:'center'}}>
+            <KeyboardAvoidingView style={config.fullLayout}>
+                <Text style={{fontSize: 32}}>Pillbox App</Text>
+                <LoginForm/>
                 <TouchableOpacity 
+                    style={styles.buttons}
                     onPress={()=> this.login()}>
-                        <Text>Login</Text>
+                        <Text style={styles.loginText}>LOGIN</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                     onPress={()=> this.signup()}>
-                        <Text>New User?</Text>
+                        <Text style={styles.registerText}>New User?</Text>
                 </TouchableOpacity>
-            </View>            
+            </KeyboardAvoidingView>            
         )
     }
 }
+
+const styles = StyleSheet.create({
+    buttons: {
+        height: 55,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+        padding: 10,
+        backgroundColor: config.colors.darkGreen
+    },
+    loginText: {
+        fontSize: 24,
+        color: 'white',
+    },
+    registerText: {
+        fontSize: 18,
+    }
+});
 
 export default Login;
