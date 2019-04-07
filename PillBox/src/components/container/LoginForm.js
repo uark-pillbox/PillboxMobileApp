@@ -3,6 +3,15 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import config from '../../config';
 
 class LoginForm extends Component {
+    state = {
+        username: '',
+        password: '',
+      }
+
+      login() {
+        alert(this.state.username,
+            this.state.password);
+    }
 
     render() {
         return (
@@ -14,6 +23,8 @@ class LoginForm extends Component {
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder="Username"
+                        value={this.state.username}
+                        onChangeText={username = this.setState({username})}
                         autoFocus={true}
                         returnKeyType="next"
                         onSubmitEditing={() => this.passwordInput.focus()}
@@ -26,6 +37,8 @@ class LoginForm extends Component {
                         style={styles.input}
                         autoCapitalize="none"
                         ref={(input) => this.passwordInput = input}
+                        value={this.state.password}
+                        onChangeText={password = this.setState({password})}
                         autoCorrect={false}
                         placeholder="Password"
                         returnKeyType="go"
@@ -33,9 +46,20 @@ class LoginForm extends Component {
                     />
                     
                 </View>
+
+                <View>
+                    <TouchableOpacity 
+                        style={styles.buttons}
+                        onPress={()=> this.login()}>
+                            <Text style={styles.loginText}>LOGIN</Text>
+                    </TouchableOpacity>
+                </View>
+
             </View>
         )
     }
+
+    
 }
 
 const styles = StyleSheet.create({
@@ -44,6 +68,15 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 10,
         fontSize: 20
+    },
+    buttons: {
+        height: 55,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+        padding: 10,
+        backgroundColor: config.colors.darkGreen
     }
 });
 

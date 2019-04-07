@@ -19,11 +19,11 @@ class Login extends Component {
             <KeyboardAvoidingView style={config.fullLayout}>
                 <Text style={{fontSize: 32}}>Pillbox App</Text>
                 <LoginForm/>
-                <TouchableOpacity 
+                {/* <TouchableOpacity 
                     style={styles.buttons}
                     onPress={()=> this.login()}>
                         <Text style={styles.loginText}>LOGIN</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity 
                     onPress={()=> this.signup()}>
