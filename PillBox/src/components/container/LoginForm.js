@@ -8,7 +8,6 @@ class LoginForm extends Component {
         this.state = {
             username: '',
             password: '',
-            // isLoading: 'true',
           };
     }
 

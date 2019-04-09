@@ -5,11 +5,6 @@ import config from '../../config';
 
 class Login extends Component {
 
-    login() {
-        //Go to Home page
-        this.props.navigation.navigate('home');
-    }
-
     signup() {
         this.props.navigation.navigate('register');
     }
@@ -18,7 +13,7 @@ class Login extends Component {
         return (
             <KeyboardAvoidingView style={config.fullLayout}>
                 <Text style={{fontSize: 32}}>Pillbox App</Text>
-                <LoginForm/>
+                <LoginForm navigation={this.props.navigation}/>
                 <TouchableOpacity 
                     onPress={()=> this.signup()}>
                         <Text style={styles.registerText}>New User?</Text>
