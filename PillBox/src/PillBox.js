@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
-import { Login, Register, Home, Scheduler, Scan } from './components/screens'
+import { Login, Register, Home, Scheduler, DrugInput, Interactions, Logout } from './components/screens'
 import { createSwitchNavigator, createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 
 
 const HomeTabs = createBottomTabNavigator({
     home: Home,
     scheduler: Scheduler,
-    scan: Scan
+    drugInput: DrugInput,
+    interactions: Interactions,
+    logout: Logout
 });
 
 const SignIn = createStackNavigator({
@@ -23,12 +24,14 @@ const MainStack = createSwitchNavigator({
     initialRouteName: 'signin',
 });
 
-class PillBox extends Component {
-    render() {
-        return(
-            <MainStack/>
-        )
-    }
-}
+const PillBox = createAppContainer(MainStack);
 
-export default createAppContainer(MainStack);
+// class PillBox extends Component {
+//     render() {
+//         return(
+//             createAppContainer(MainStack)
+//         )
+//     }
+// }
+
+export default PillBox;

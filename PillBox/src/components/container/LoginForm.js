@@ -11,7 +11,37 @@ class LoginForm extends Component {
           };
     }
 
-    login() {
+    async login() {
+        try {
+            let response = await fetch(config.baseUrl + "users/authenticate", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password,
+                    }),
+                });
+                
+                let status = response.status;
+                if(status === 200) {
+                    this.props.navigation.navigate('home');
+                }
+                else {
+                    alert("Username or passowrd is incorrect. Try again.")
+                }
+            return response;
+        } catch(error) {
+            console.error(error);
+        }
+
+
+
+
+        // return fetch(config.baseUrl + 'users/authenticate')
+
         // return fetch('https://facebook.github.io/react-native/movies.json')
         // .then((response) => response.json())
         // .then((responseJson) => {
@@ -45,8 +75,8 @@ class LoginForm extends Component {
         // Figure out how to get the response from the fetch after the credentials are passed to the server
         // Then, if valid, go to the "home" page
         // If invalid need to reload LoginForm? Alert that the information was invalid?
-        alert(this.state.password);
-        this.props.navigation.navigate('home');
+        // alert(this.state.password);
+        // this.props.navigation.navigate('home');
     }
     
     render() {

@@ -19,5 +19,6 @@ export default {
     colors: {
         lightGreen: 'rgb(100, 255, 100)',
         darkGreen: 'rgb(1,135,26)'
-    }
+    },
+    baseUrl: 'http://10.0.2.2:1234/'
 };

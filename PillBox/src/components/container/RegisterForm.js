@@ -14,9 +14,52 @@ class RegisterForm extends Component {
           };
     }
 
-    register() {
-        alert(this.state.name);
-        this.props.navigation.navigate('home');
+    async register() {
+        // return fetch(config.baseUrl + 'users/register')
+        //     .then((response) => response.json())
+        //     .then((responseJson) => {
+        //         return responseJson.message;
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
+        // alert(this.state.name);
+        // this.props.navigation.navigate('login');
+        try {
+            let response = await fetch(config.baseUrl + "users/register", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: this.state.name,
+                    email: this.state.email,
+                    username: this.state.username,
+                    password: this.state.password,
+                    }),
+                });
+                this.props.navigation.navigate('login');
+            return response;
+        } catch(error) {
+            console.error(error);
+        }
+
+
+        
+
+
+        // async function getMoviesFromApi() {
+        //     try {
+        //       let response = await fetch(
+        //         'https://facebook.github.io/react-native/movies.json',
+        //       );
+        //       let responseJson = await response.json();
+        //       return responseJson.movies;
+        //     } catch (error) {
+        //       console.error(error);
+        //     }
+        //   }
     }
 
     render() {

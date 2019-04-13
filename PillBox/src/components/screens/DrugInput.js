@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 
-class Scan extends Component {
+class DrugInput extends Component {
 
     render() {
         return (
@@ -13,4 +13,4 @@ class Scan extends Component {
     }
 }
 
-export default Scan;
+export default DrugInput;
