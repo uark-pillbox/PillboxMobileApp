@@ -12,7 +12,7 @@ class LoginForm extends Component {
     }
 
     async login() {
-        try {
+        try {            
             let response = await fetch(config.baseUrl + "users/authenticate", {
                 method: 'POST',
                 headers: {
@@ -26,57 +26,22 @@ class LoginForm extends Component {
                 });
                 
                 let status = response.status;
+                let resJson = JSON.parse(response._bodyText);
+                let token = resJson.token;
+                config.user.token = token;
+                let drugs = resJson.drugs;
+                config.user.drugs = drugs;
+
                 if(status === 200) {
                     this.props.navigation.navigate('home');
                 }
                 else {
-                    alert("Username or passowrd is incorrect. Try again.")
+                    alert("Username or password is incorrect. Try again.")
                 }
             return response;
         } catch(error) {
             console.error(error);
         }
-
-
-
-
-        // return fetch(config.baseUrl + 'users/authenticate')
-
-        // return fetch('https://facebook.github.io/react-native/movies.json')
-        // .then((response) => response.json())
-        // .then((responseJson) => {
-
-        //     this.setState({
-        //     isLoading: false,
-        //     dataSource: responseJson.movies,
-        //     }, function(){
-
-        //     });
-
-        // })
-        // .catch((error) =>{
-        //     console.error(error);
-        // });
-
-        // fetch('https://mywebsite.com/endpoint/', {
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         username: this.state.username,
-        //         password: this.state.password,
-        //     }),
-        // });
-
-
-
-        // Figure out how to get the response from the fetch after the credentials are passed to the server
-        // Then, if valid, go to the "home" page
-        // If invalid need to reload LoginForm? Alert that the information was invalid?
-        // alert(this.state.password);
-        // this.props.navigation.navigate('home');
     }
     
     render() {
@@ -125,8 +90,6 @@ class LoginForm extends Component {
             </View>
         )
     }
-
-    
 }
 
 const styles = StyleSheet.create({

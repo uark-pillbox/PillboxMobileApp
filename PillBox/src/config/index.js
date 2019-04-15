@@ -20,5 +20,14 @@ export default {
         lightGreen: 'rgb(100, 255, 100)',
         darkGreen: 'rgb(1,135,26)'
     },
-    baseUrl: 'http://10.0.2.2:1234/'
+    baseUrl: 'http://10.0.2.2:1234/',
+    user: {
+        drugs: '',
+        _id: '',
+        name: '',
+        email: '',
+        username: '',
+        __v: '',
+        token: ''
+    }
 };

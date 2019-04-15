@@ -15,16 +15,6 @@ class RegisterForm extends Component {
     }
 
     async register() {
-        // return fetch(config.baseUrl + 'users/register')
-        //     .then((response) => response.json())
-        //     .then((responseJson) => {
-        //         return responseJson.message;
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
-        // alert(this.state.name);
-        // this.props.navigation.navigate('login');
         try {
             let response = await fetch(config.baseUrl + "users/register", {
                 method: 'POST',
@@ -39,27 +29,18 @@ class RegisterForm extends Component {
                     password: this.state.password,
                     }),
                 });
-                this.props.navigation.navigate('login');
+
+                let status = response.status;
+                if(status === 200) {
+                    this.props.navigation.navigate('login');
+                }
+                else {
+                    alert("Username \"" + this.state.username + "\" is already taken")
+                }
             return response;
         } catch(error) {
             console.error(error);
         }
-
-
-        
-
-
-        // async function getMoviesFromApi() {
-        //     try {
-        //       let response = await fetch(
-        //         'https://facebook.github.io/react-native/movies.json',
-        //       );
-        //       let responseJson = await response.json();
-        //       return responseJson.movies;
-        //     } catch (error) {
-        //       console.error(error);
-        //     }
-        //   }
     }
 
     render() {

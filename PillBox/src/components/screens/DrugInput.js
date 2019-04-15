@@ -1,16 +1,37 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
+import { DrugInputForm } from '../container'
+import config from '../../config';
 
 class DrugInput extends Component {
 
     render() {
         return (
-            <TouchableOpacity 
-                style={{height:100+'%', width:100+'%', flex:1, justifyContent:'center', alignItems:'center'}}>
-                <Text>Future Scan Page</Text>
-            </TouchableOpacity>
+            <View style={config.fullLayout}>
+                <Text style={{fontSize: 32}}>Drug Input</Text>
+                <DrugInputForm/>
+
+            </View>
+                
+            
         )
     }
 }
+
+const styles = StyleSheet.create({
+    buttons: {
+        height: 55,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+        padding: 10,
+        backgroundColor: config.colors.darkGreen
+    },
+    loginText: {
+        fontSize: 24,
+        color: 'white',
+    },
+});
 
 export default DrugInput;
