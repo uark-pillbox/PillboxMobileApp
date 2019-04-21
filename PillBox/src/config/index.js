@@ -29,5 +29,39 @@ export default {
         username: '',
         __v: '',
         token: ''
-    }
+    },
+    weekdaysDate: [
+        {
+            title: 'Monday',
+            value: 'M'
+        },
+        {
+            title: 'Tuesday',
+            value: 'Tu'
+        },
+        {
+            title: 'Wednesday',
+            value: 'W'
+        },
+        {
+            title: 'Thursday',
+            value: 'Th'
+        },
+        {
+            title: 'Friday',
+            value: 'F'
+        },
+        {
+            title: 'Saturday',
+            value: 'Sa'
+        },
+        {
+            title: 'Sunday',
+            value: 'Su'
+        },
+        {
+            title: 'Everyday',
+            value: 'MTuWThFSaSu'
+        }
+    ],
 };

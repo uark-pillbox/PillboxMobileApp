@@ -27,12 +27,54 @@ class DrugInputForm extends Component {
                 // alert(JSON.stringify(response));
 
                 let status = response.status;
+                let resJson = JSON.parse(response._bodyText);
+                let drugs = resJson.drugs;
+                config.user.drugs = drugs;
+                // let responseData = response.text();
 
                 if(status === 200) {
                     alert("Drug added.");
                 }
                 else {
+                    // alert(responseData)
+                    // alert(JSON.stringify(responseData));
                     alert("There was an error adding " + this.state.drug);
+                }
+            return response;
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
+    async removeDrug() {
+        try {            
+            let response = await fetch(config.baseUrl + "drugs/remove", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + config.user.token,
+                },
+                body: JSON.stringify({
+                    name: this.state.drug,
+                    }),
+                });
+                // alert(JSON.stringify(response));
+
+                let status = response.status;
+                
+                // let responseData = response.text();
+
+                if(status === 200) {
+                    alert("Drug removed.");
+                    let resJson = JSON.parse(response._bodyText);
+                    let drugs = resJson.drugs;
+                    config.user.drugs = drugs;
+                }
+                else {
+                    // alert(responseData)
+                    // alert(JSON.stringify(responseData));
+                    alert("There was an error removing " + this.state.drug);
                 }
             return response;
         } catch(error) {
@@ -65,7 +107,16 @@ class DrugInputForm extends Component {
                             <Text style={styles.loginText}>Add Drug</Text>
                     </TouchableOpacity>
                 </View>
+
+                <View>
+                    <TouchableOpacity 
+                        style={styles.buttons}
+                        onPress={()=> this.removeDrug()}>
+                            <Text style={styles.loginText}>Remove Drug</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
+            
         )
     }
 }

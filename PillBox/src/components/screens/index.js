@@ -3,7 +3,8 @@ import Interactions from './Interactions'
 import Login from './Login'
 import Register from './Register'
 import DrugInput from './DrugInput'
-import Scheduler from './Scheduler'
+import ScheduleCreator from './ScheduleCreator'
+import ScheduleViewer from './ScheduleViewer'
 import Logout from './Logout'
 
 export {
@@ -12,6 +13,7 @@ export {
     Login,
     Register,
     DrugInput,
-    Scheduler,
+    ScheduleCreator,
+    ScheduleViewer,
     Logout
 };

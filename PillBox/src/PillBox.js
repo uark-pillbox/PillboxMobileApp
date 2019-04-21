@@ -1,11 +1,12 @@
-import { Login, Register, Home, Scheduler, DrugInput, Interactions, Logout } from './components/screens'
+import { Login, Register, Home, ScheduleCreator, ScheduleViewer, DrugInput, Interactions, Logout } from './components/screens'
 import { createSwitchNavigator, createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 
 
 const HomeTabs = createBottomTabNavigator({
     home: Home,
-    scheduler: Scheduler,
     drugInput: DrugInput,
+    scheduler: ScheduleCreator,
+    viewer: ScheduleViewer,
     interactions: Interactions,
     logout: Logout
 });
@@ -25,13 +26,5 @@ const MainStack = createSwitchNavigator({
 });
 
 const PillBox = createAppContainer(MainStack);
-
-// class PillBox extends Component {
-//     render() {
-//         return(
-//             createAppContainer(MainStack)
-//         )
-//     }
-// }
 
 export default PillBox;

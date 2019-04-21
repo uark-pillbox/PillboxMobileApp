@@ -26,13 +26,14 @@ class LoginForm extends Component {
                 });
                 
                 let status = response.status;
-                let resJson = JSON.parse(response._bodyText);
-                let token = resJson.token;
-                config.user.token = token;
-                let drugs = resJson.drugs;
-                config.user.drugs = drugs;
+                
 
                 if(status === 200) {
+                    let resJson = JSON.parse(response._bodyText);
+                    let token = resJson.token;
+                    config.user.token = token;
+                    let drugs = resJson.drugs;
+                    config.user.drugs = drugs;
                     this.props.navigation.navigate('home');
                 }
                 else {
