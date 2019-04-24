@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, Modal, TouchableHighlight, StyleSheet } from 'react-native'
-import { TimePicker, WheelPicker } from 'react-native-wheel-picker-android';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import config from '../../config';
 
 class ScheduleCreator extends Component {
@@ -8,11 +8,13 @@ class ScheduleCreator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            drugSelection: 'default',
+            drugSelection: '',
             drugPickerDisplayed: false,
             selectedDayOfWeek: '',
             dayPickerDisplayed: false,
-            selectedTime: ''
+            selectedTime: '',
+            timePickerDisplayed: false,
+            isValidSchedule: false
           };
     }
 
@@ -42,6 +44,35 @@ class ScheduleCreator extends Component {
         })
     }
 
+    setTimeValue = time => {
+        this.setState({
+            selectedTime: time.getHours().toString() + ':' + time.getMinutes().toString()
+        })
+        this.toggleTimePicker();
+    }
+
+    toggleTimePicker() {
+        this.setState({
+            timePickerDisplayed: !this.state.timePickerDisplayed
+        })
+    }
+
+    scheduleChecker() {
+        if(this.state.drugSelection.length > 0 && this.state.selectedDayOfWeek.length > 0 && this.state.selectedTime.length > 0) {
+            this.setState({
+                isValidSchedule: true
+            })
+        }
+        this.submitSchedule()
+    }
+
+    submitSchedule() {
+        alert(this.state.isValidSchedule)
+        if(this.state.isValidSchedule) {
+            //Make POST to server with schedule
+        }
+    }
+
     render() {
 
         return (
@@ -57,6 +88,16 @@ class ScheduleCreator extends Component {
                 </TouchableOpacity>
 
                 <Text>The day selected is { this.state.selectedDayOfWeek }</Text>
+
+                <TouchableOpacity style={styles.buttons} onPress={() => this.toggleTimePicker()}>
+                    <Text style={styles.buttonText}>Select a Time</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.buttons} onPress={() => this.scheduleChecker()}>
+                    <Text style={styles.buttonText}>Submit Schedule</Text>
+                </TouchableOpacity>
+
+                <Text>The time selected is { this.state.selectedTime }</Text>
 
                 <Modal visible={this.state.drugPickerDisplayed} animationType={'fade'} transparent={true}>
                     <View style={styles.modal}>
@@ -90,7 +131,15 @@ class ScheduleCreator extends Component {
                         </TouchableHighlight>
 
                     </View>
-                </Modal>        
+                </Modal>
+
+                <DateTimePicker
+                    isVisible={this.state.timePickerDisplayed}
+                    onConfirm={this.setTimeValue}
+                    onCancel={this.toggleTimePicker}
+                    mode='time'
+                    is24Hour={false}
+                />        
 
             </View>
         )
