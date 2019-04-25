@@ -31,7 +31,13 @@ class LoginForm extends Component {
                 if(status === 200) {
                     let resJson = JSON.parse(response._bodyText);
                     let token = resJson.token;
-                    config.user.token = token;
+					config.user.token = token;
+					let name = resJson.name;
+					config.user.name = name;
+					let username = resJson.username;
+					config.user.username = username;
+					let email = resJson.email;
+                    config.user.email = email;
                     let drugs = resJson.drugs;
                     config.user.drugs = drugs;
                     this.props.navigation.navigate('home');
