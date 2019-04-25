@@ -74,30 +74,31 @@ class ScheduleCreator extends Component {
         });
     };
 
-    scheduleChecker() {
+    async scheduleChecker() {
         if(this.state.drugSelection.length > 0 && this.state.selectedDayOfWeek.length > 0 && this.state.selectedTime.length > 0) {
             this.setState({
-                schedule: this.state.selectedDayOfWeek + ',' + this.state.selectedTime,
+                schedule: this.state.selectedDayOfWeek + ',' + this.state.selectedTime
             }, () => {
                 // alert(this.state.schedule);
             });
+            // alert(this.state.schedule);
             return true;
         }
         alert("Please make sure have a Drug, Day of Week, and Time selected.");
         return false;
     }
 
-    updateSchedule() {
-        let tempUserSchedule = [];
-            for(i = 0; i < this.state.userSchedule.length; i++) {
-                tempUserSchedule[i] = this.state.userSchedule[i];
-            }
-            tempUserSchedule[this.state.userSchedule.length] = this.state.schedule;
-            this.setState({
-                userSchedule: tempUserSchedule
-            })
-            alert(this.state.userSchedule);
-    }
+    // updateSchedule() {
+    //     let tempUserSchedule = [];
+    //         for(i = 0; i < this.state.userSchedule.length; i++) {
+    //             tempUserSchedule[i] = this.state.userSchedule[i];
+    //         }
+    //         tempUserSchedule[this.state.userSchedule.length] = this.state.schedule;
+    //         this.setState({
+    //             userSchedule: tempUserSchedule
+    //         })
+    //         alert(this.state.userSchedule);
+    // }
 
     // removeSchedule() {
     //     this.setState({
@@ -106,9 +107,38 @@ class ScheduleCreator extends Component {
     //     this.submitSchedule()
     // }
 
+    // async setNewSchedule(newSchedule) {
+    //     let tempSchedule = [];
+
+    //     let len = 0
+    //     if(this.state.userSchedule == undefined || this.state.userSchedule.length == 0){
+    //         len = 1;
+    //     } else {
+    //         len = this.state.userSchedule.length;
+    //     }
+
+    //     console.log("Length: "+len);
+    //     for(i = 0; i < len; i++){
+    //         tempSchedule[i] = this.state.userSchedule[i];
+    //         console.log("Schedule "+tempSchedule[i]);
+    //     }
+    //     tempSchedule[len] = newSchedule;
+    //     return tempSchedule;
+    // }
+
     async submitSchedule() {
-        if(this.scheduleChecker()) {
-            this.updateSchedule();
+        if(await this.scheduleChecker()) {
+            // this.updateSchedule();
+            // this.state.userSchedule.push(this.state.schedule);
+            //await this.setNewSchedule(this.state.schedule);
+            let tempSchedule = this.state.userSchedule;
+            let sch = this.state.schedule;
+            if(this.state.userSchedule == undefined || this.state.userSchedule.length == 0){
+                tempSchedule[0] = sch;
+                //alert(sch);
+            } else {
+                tempSchedule[this.state.userSchedule.length] = sch;
+            }
 
             try {            
                 let response = await fetch(config.baseUrl + "drugs/changeSchedule", {
@@ -120,7 +150,7 @@ class ScheduleCreator extends Component {
                     },
                     body: JSON.stringify({
                         name: this.state.drugSelection,
-                        schedule: this.state.userSchedule
+                        schedule: tempSchedule
                         }),
                     });
         
@@ -128,7 +158,7 @@ class ScheduleCreator extends Component {
                             
                     if(status === 200) {
                         if(this.state.schedule.length > 0) {
-                            // alert("Schedule added.");
+                            alert("Schedule added.");
                         } else {
                             alert("Schedule deleted.")
                         }
