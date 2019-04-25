@@ -15,7 +15,7 @@ class ScheduleCreator extends Component {
             dayPickerDisplayed: false,
             selectedTime: '',
             timePickerDisplayed: false,
-            // userSchedule: [],
+            userSchedule: [],
             schedule: ''
           };
     }
@@ -23,9 +23,11 @@ class ScheduleCreator extends Component {
     setDrugValueAndScheduleValue(newDrugValue, scheduleValue) {
         this.setState({
             drugSelection: newDrugValue,
-            // userSchedule: scheduleValue
-        })
-        this.toggleDrugPicker();
+            userSchedule: scheduleValue
+        }, () => {
+            // alert(this.state.userSchedule);
+            this.toggleDrugPicker();
+        });
     }
 
     toggleDrugPicker() {
@@ -38,8 +40,11 @@ class ScheduleCreator extends Component {
         this.setState({
             selectedDayOfWeek: newDayValue,
             fullSelectedDayOfWeek: newDayTitle
-        })
-        this.toggleDayPicker();
+        }, () => {
+            // alert(this.state.selectedDayOfWeek);
+            this.toggleDayPicker();
+        });
+        
     }
 
     toggleDayPicker() {
@@ -50,9 +55,11 @@ class ScheduleCreator extends Component {
 
     setTimeValue = time => {
         this.setState({
-            selectedTime: time.getHours().toString() + ':' + time.getMinutes().toString()
-        })
-        this.hideTimePicker();
+            selectedTime: time.getHours().toString() + ':' + ('0' + time.getMinutes()).slice(-2).toString()
+        }, () => {
+            // alert(this.state.selectedTime);
+            this.hideTimePicker();
+        });
     }
 
     showTimePicker = () => {
@@ -70,12 +77,14 @@ class ScheduleCreator extends Component {
     scheduleChecker() {
         if(this.state.drugSelection.length > 0 && this.state.selectedDayOfWeek.length > 0 && this.state.selectedTime.length > 0) {
             this.setState({
-                schedule: this.state.selectedDayOfWeek + ',' + this.state.selectedTime
+                schedule: this.state.selectedDayOfWeek + ',' + this.state.selectedTime,
+            }, () => {
+                // alert(this.state.schedule);
             });
-            this.submitSchedule()
-        } else {
-            alert("Please make sure have a Drug, Day of Week, and Time selected.")
+            return true;
         }
+        alert("Please make sure have a Drug, Day of Week, and Time selected.");
+        return false;
     }
 
     // removeSchedule() {
@@ -86,42 +95,46 @@ class ScheduleCreator extends Component {
     // }
 
     async submitSchedule() {
-        try {            
-            let response = await fetch(config.baseUrl + "drugs/changeSchedule", {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + config.user.token,
-                },
-                body: JSON.stringify({
-                    name: this.state.drugSelection,
-                    schedule: [
-                        // this.state.userSchedule,
-                        this.state.schedule
-                    ]
-                    }),
-                });
-    
-                let status = response.status;
-                        
-                if(status === 200) {
-                    if(this.state.schedule.length > 0) {
-                        alert("Schedule added.");
-                    } else {
-                        alert("Schedule deleted.")
+        if(this.scheduleChecker()) {
+            this.forceUpdate();
+            this.state.userSchedule.push(this.state.schedule);
+            this.forceUpdate();
+
+            alert(this.state.userSchedule);
+            try {            
+                let response = await fetch(config.baseUrl + "drugs/changeSchedule", {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + config.user.token,
+                    },
+                    body: JSON.stringify({
+                        name: this.state.drugSelection,
+                        schedule: this.state.userSchedule
+                        }),
+                    });
+        
+                    let status = response.status;
+                            
+                    if(status === 200) {
+                        if(this.state.schedule.length > 0) {
+                            // alert("Schedule added.");
+                        } else {
+                            alert("Schedule deleted.")
+                        }
+                        let resJson = JSON.parse(response._bodyText);
+                        let drugs = resJson.drugs;
+                        config.user.drugs = drugs;
                     }
-                    let resJson = JSON.parse(response._bodyText);
-                    let drugs = resJson.drugs;
-                    config.user.drugs = drugs;
-                }
-                else {
-                    // alert(JSON.stringify(response));
-                    alert("There was an error Adding/Deleting the Schedule.")
-                }
-            return response;
-        } catch(error) {
-            console.error(error);
+                    else {
+                        // alert(JSON.stringify(response));
+                        alert("There was an error Adding/Deleting the Schedule.")
+                    }
+                return response;
+            } catch(error) {
+                console.error(error);
+            }
         }
     }
 
@@ -147,7 +160,7 @@ class ScheduleCreator extends Component {
 
                 <Text>The time selected is { this.state.selectedTime }</Text>
 
-                <TouchableOpacity style={styles.buttons} onPress={() => this.scheduleChecker()}>
+                <TouchableOpacity style={styles.buttons} onPress={() => this.submitSchedule()}>
                     <Text style={styles.buttonText}>Submit Schedule</Text>
                 </TouchableOpacity>
 
