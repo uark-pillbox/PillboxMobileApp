@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { SchedulePresentation } from '../presentation/SchedulePresentation'
 import config from '../../config';
 
 class ScheduleViewer extends Component {
@@ -8,10 +9,7 @@ class ScheduleViewer extends Component {
         return (
             <View 
                 style={config.fullLayout}>
-                <TouchableOpacity
-                    style={styles.buttons}>
-                    <Text style = {styles.text}>Future Schedule Viewer Page</Text>
-                </TouchableOpacity>
+                <SchedulePresentation/>
             </View>
         )
     }

@@ -1,5 +1,5 @@
-import ScheduleDisplay from './ScheduleDisplay'
+import SchedulePresentation from './SchedulePresentation'
 
 export {
-    ScheduleDisplay
+    SchedulePresentation
 };
