@@ -11,7 +11,7 @@ class Home extends Component {
                         style={styles.buttons}>
                             <Text style={styles.loginText}>Future Home Page</Text>
                     </TouchableOpacity>
-                </View>
+            </View>
         )
     }
 }

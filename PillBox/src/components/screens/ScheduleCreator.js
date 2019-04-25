@@ -87,6 +87,18 @@ class ScheduleCreator extends Component {
         return false;
     }
 
+    updateSchedule() {
+        let tempUserSchedule = [];
+            for(i = 0; i < this.state.userSchedule.length; i++) {
+                tempUserSchedule[i] = this.state.userSchedule[i];
+            }
+            tempUserSchedule[this.state.userSchedule.length] = this.state.schedule;
+            this.setState({
+                userSchedule: tempUserSchedule
+            })
+            alert(this.state.userSchedule);
+    }
+
     // removeSchedule() {
     //     this.setState({
     //         schedule: '',
@@ -96,11 +108,8 @@ class ScheduleCreator extends Component {
 
     async submitSchedule() {
         if(this.scheduleChecker()) {
-            this.forceUpdate();
-            this.state.userSchedule.push(this.state.schedule);
-            this.forceUpdate();
+            this.updateSchedule();
 
-            alert(this.state.userSchedule);
             try {            
                 let response = await fetch(config.baseUrl + "drugs/changeSchedule", {
                     method: 'POST',
