@@ -4,16 +4,11 @@ import config from '../../config';
 
 class Home extends Component {
 
-    login() {
-        alert(config.user.token)
-    }
-
     render() {
         return (
             <View style={config.fullLayout}>
                     <TouchableOpacity 
-                        style={styles.buttons}
-                        onPress={()=> this.login()}>
+                        style={styles.buttons}>
                             <Text style={styles.loginText}>Future Home Page</Text>
                     </TouchableOpacity>
                 </View>

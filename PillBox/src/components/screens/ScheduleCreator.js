@@ -11,10 +11,10 @@ class ScheduleCreator extends Component {
             drugSelection: '',
             drugPickerDisplayed: false,
             selectedDayOfWeek: '',
+            fullSelectedDayOfWeek: '',
             dayPickerDisplayed: false,
             selectedTime: '',
             timePickerDisplayed: false,
-            isValidSchedule: false
           };
     }
 
@@ -31,9 +31,10 @@ class ScheduleCreator extends Component {
         })
     }
 
-    setDayOfWeekValue(newDayValue) {
+    setDayOfWeekValue(newDayValue, newDayTitle) {
         this.setState({
-            selectedDayOfWeek: newDayValue
+            selectedDayOfWeek: newDayValue,
+            fullSelectedDayOfWeek: newDayTitle
         })
         this.toggleDayPicker();
     }
@@ -48,28 +49,60 @@ class ScheduleCreator extends Component {
         this.setState({
             selectedTime: time.getHours().toString() + ':' + time.getMinutes().toString()
         })
-        this.toggleTimePicker();
+        this.hideTimePicker();
     }
 
-    toggleTimePicker() {
+    showTimePicker = () => {
         this.setState({
-            timePickerDisplayed: !this.state.timePickerDisplayed
-        })
-    }
+            timePickerDisplayed: true
+        });
+    };
+
+    hideTimePicker = () => {
+        this.setState({
+            timePickerDisplayed: false
+        });
+    };
 
     scheduleChecker() {
         if(this.state.drugSelection.length > 0 && this.state.selectedDayOfWeek.length > 0 && this.state.selectedTime.length > 0) {
-            this.setState({
-                isValidSchedule: true
-            })
+            this.submitSchedule()
+        } else {
+            alert("Please make sure have a Drug, Day of Week, and Time selected.")
         }
-        this.submitSchedule()
     }
 
-    submitSchedule() {
-        alert(this.state.isValidSchedule)
-        if(this.state.isValidSchedule) {
-            //Make POST to server with schedule
+    async submitSchedule() {
+        try {            
+            let response = await fetch(config.baseUrl + "drugs/changeSchedule", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + config.user.token,
+                },
+                body: JSON.stringify({
+                    name: this.state.drugSelection,
+                    schedule: [
+                        this.state.selectedDayOfWeek + ',' + this.state.selectedTime
+                    ]
+                    }),
+                });
+    
+                let status = response.status;
+                        
+                if(status === 200) {
+                    alert("Schedule added.");
+                    let resJson = JSON.parse(response._bodyText);
+                    let drugs = resJson.drugs;
+                    config.user.drugs = drugs;
+                }
+                else {
+                    alert(JSON.stringify(response));
+                }
+            return response;
+        } catch(error) {
+            console.error(error);
         }
     }
 
@@ -87,17 +120,17 @@ class ScheduleCreator extends Component {
                     <Text style={styles.buttonText}>Select a Day of the Week</Text>
                 </TouchableOpacity>
 
-                <Text>The day selected is { this.state.selectedDayOfWeek }</Text>
+                <Text>The day selected is { this.state.fullSelectedDayOfWeek }</Text>
 
-                <TouchableOpacity style={styles.buttons} onPress={() => this.toggleTimePicker()}>
+                <TouchableOpacity style={styles.buttons} onPress={() => this.showTimePicker()}>
                     <Text style={styles.buttonText}>Select a Time</Text>
                 </TouchableOpacity>
+
+                <Text>The time selected is { this.state.selectedTime }</Text>
 
                 <TouchableOpacity style={styles.buttons} onPress={() => this.scheduleChecker()}>
                     <Text style={styles.buttonText}>Submit Schedule</Text>
                 </TouchableOpacity>
-
-                <Text>The time selected is { this.state.selectedTime }</Text>
 
                 <Modal visible={this.state.drugPickerDisplayed} animationType={'fade'} transparent={true}>
                     <View style={styles.modal}>
@@ -121,7 +154,7 @@ class ScheduleCreator extends Component {
                         <Text style={{fontWeight:'bold', fontSize: 14}}>Please pick a day</Text>
 
                         { config.weekdaysDate.map((value, index) => {
-                            return <TouchableHighlight key={index} onPress={() => this.setDayOfWeekValue(value.value)} style={styles.drugDisplay}>
+                            return <TouchableHighlight key={index} onPress={() => this.setDayOfWeekValue(value.value, value.title)} style={styles.drugDisplay}>
                                     <Text>{ value.title }</Text>
                                 </TouchableHighlight>
                         })}
@@ -136,7 +169,7 @@ class ScheduleCreator extends Component {
                 <DateTimePicker
                     isVisible={this.state.timePickerDisplayed}
                     onConfirm={this.setTimeValue}
-                    onCancel={this.toggleTimePicker}
+                    onCancel={this.hideTimePicker}
                     mode='time'
                     is24Hour={false}
                 />        

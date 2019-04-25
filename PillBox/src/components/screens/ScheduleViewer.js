@@ -1,16 +1,36 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import config from '../../config';
 
 class ScheduleViewer extends Component {
 
     render() {
         return (
-            <TouchableOpacity 
-                style={{height:100+'%', width:100+'%', flex:1, justifyContent:'center', alignItems:'center'}}>
-                <Text>Future Schedule Viewer Page</Text>
-            </TouchableOpacity>
+            <View 
+                style={config.fullLayout}>
+                <TouchableOpacity
+                    style={styles.buttons}>
+                    <Text style = {styles.text}>Future Schedule Viewer Page</Text>
+                </TouchableOpacity>
+            </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    buttons: {
+        height: 55,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+        padding: 10,
+        backgroundColor: config.colors.darkGreen
+    },
+    text: {
+        fontSize: 24,
+        color: 'white',
+    },
+});
 
 export default ScheduleViewer;

@@ -8,6 +8,7 @@ class DrugInputForm extends Component {
         super(props);
         this.state = {
             drug: '',
+            schedule: []
           };
     }
 
@@ -22,18 +23,20 @@ class DrugInputForm extends Component {
                 },
                 body: JSON.stringify({
                     name: this.state.drug,
+                    schedule: this.state.schedule
                     }),
                 });
                 // alert(JSON.stringify(response));
 
                 let status = response.status;
-                let resJson = JSON.parse(response._bodyText);
-                let drugs = resJson.drugs;
-                config.user.drugs = drugs;
+                
                 // let responseData = response.text();
 
                 if(status === 200) {
                     alert("Drug added.");
+                    let resJson = JSON.parse(response._bodyText);
+                    let drugs = resJson.drugs;
+                    config.user.drugs = drugs;
                 }
                 else {
                     // alert(responseData)
