@@ -15,12 +15,15 @@ class ScheduleCreator extends Component {
             dayPickerDisplayed: false,
             selectedTime: '',
             timePickerDisplayed: false,
+            // userSchedule: [],
+            schedule: ''
           };
     }
 
-    setDrugValue(newDrugValue) {
+    setDrugValueAndScheduleValue(newDrugValue, scheduleValue) {
         this.setState({
-            drugSelection: newDrugValue
+            drugSelection: newDrugValue,
+            // userSchedule: scheduleValue
         })
         this.toggleDrugPicker();
     }
@@ -66,11 +69,21 @@ class ScheduleCreator extends Component {
 
     scheduleChecker() {
         if(this.state.drugSelection.length > 0 && this.state.selectedDayOfWeek.length > 0 && this.state.selectedTime.length > 0) {
+            this.setState({
+                schedule: this.state.selectedDayOfWeek + ',' + this.state.selectedTime
+            });
             this.submitSchedule()
         } else {
             alert("Please make sure have a Drug, Day of Week, and Time selected.")
         }
     }
+
+    // removeSchedule() {
+    //     this.setState({
+    //         schedule: '',
+    //     })
+    //     this.submitSchedule()
+    // }
 
     async submitSchedule() {
         try {            
@@ -84,7 +97,8 @@ class ScheduleCreator extends Component {
                 body: JSON.stringify({
                     name: this.state.drugSelection,
                     schedule: [
-                        this.state.selectedDayOfWeek + ',' + this.state.selectedTime
+                        // this.state.userSchedule,
+                        this.state.schedule
                     ]
                     }),
                 });
@@ -92,13 +106,18 @@ class ScheduleCreator extends Component {
                 let status = response.status;
                         
                 if(status === 200) {
-                    alert("Schedule added.");
+                    if(this.state.schedule.length > 0) {
+                        alert("Schedule added.");
+                    } else {
+                        alert("Schedule deleted.")
+                    }
                     let resJson = JSON.parse(response._bodyText);
                     let drugs = resJson.drugs;
                     config.user.drugs = drugs;
                 }
                 else {
-                    alert(JSON.stringify(response));
+                    // alert(JSON.stringify(response));
+                    alert("There was an error Adding/Deleting the Schedule.")
                 }
             return response;
         } catch(error) {
@@ -132,12 +151,16 @@ class ScheduleCreator extends Component {
                     <Text style={styles.buttonText}>Submit Schedule</Text>
                 </TouchableOpacity>
 
+                {/* <TouchableOpacity style={styles.buttons} onPress={() => this.removeSchedule()}>
+                    <Text style={styles.buttonText}>Delete Schedule</Text>
+                </TouchableOpacity> */}
+
                 <Modal visible={this.state.drugPickerDisplayed} animationType={'fade'} transparent={true}>
                     <View style={styles.modal}>
                         <Text style={{fontWeight:'bold', fontSize: 14}}>Please pick a drug</Text>
 
                         { config.user.drugs.map((value, index) => {
-                            return <TouchableHighlight key={index} onPress={() => this.setDrugValue(value.name)} style={styles.drugDisplay}>
+                            return <TouchableHighlight key={index} onPress={() => this.setDrugValueAndScheduleValue(value.name, value.schedule)} style={styles.drugDisplay}>
                                     <Text>{ value.name }</Text>
                                 </TouchableHighlight>
                         })}
