@@ -25,7 +25,6 @@ class ScheduleCreator extends Component {
             drugSelection: newDrugValue,
             userSchedule: scheduleValue
         }, () => {
-            // alert(this.state.userSchedule);
             this.toggleDrugPicker();
         });
     }
@@ -41,7 +40,6 @@ class ScheduleCreator extends Component {
             selectedDayOfWeek: newDayValue,
             fullSelectedDayOfWeek: newDayTitle
         }, () => {
-            // alert(this.state.selectedDayOfWeek);
             this.toggleDayPicker();
         });
         
@@ -57,7 +55,6 @@ class ScheduleCreator extends Component {
         this.setState({
             selectedTime: time.getHours().toString() + ':' + ('0' + time.getMinutes()).slice(-2).toString()
         }, () => {
-            // alert(this.state.selectedTime);
             this.hideTimePicker();
         });
     }
@@ -79,26 +76,12 @@ class ScheduleCreator extends Component {
             this.setState({
                 schedule: this.state.selectedDayOfWeek + ',' + this.state.selectedTime
             }, () => {
-                // alert(this.state.schedule);
-            });
-            // alert(this.state.schedule);
+        });
             return true;
         }
         alert("Please make sure have a Drug, Day of Week, and Time selected.");
         return false;
     }
-
-    // updateSchedule() {
-    //     let tempUserSchedule = [];
-    //         for(i = 0; i < this.state.userSchedule.length; i++) {
-    //             tempUserSchedule[i] = this.state.userSchedule[i];
-    //         }
-    //         tempUserSchedule[this.state.userSchedule.length] = this.state.schedule;
-    //         this.setState({
-    //             userSchedule: tempUserSchedule
-    //         })
-    //         alert(this.state.userSchedule);
-    // }
 
     // removeSchedule() {
     //     this.setState({
@@ -107,35 +90,12 @@ class ScheduleCreator extends Component {
     //     this.submitSchedule()
     // }
 
-    // async setNewSchedule(newSchedule) {
-    //     let tempSchedule = [];
-
-    //     let len = 0
-    //     if(this.state.userSchedule == undefined || this.state.userSchedule.length == 0){
-    //         len = 1;
-    //     } else {
-    //         len = this.state.userSchedule.length;
-    //     }
-
-    //     console.log("Length: "+len);
-    //     for(i = 0; i < len; i++){
-    //         tempSchedule[i] = this.state.userSchedule[i];
-    //         console.log("Schedule "+tempSchedule[i]);
-    //     }
-    //     tempSchedule[len] = newSchedule;
-    //     return tempSchedule;
-    // }
-
     async submitSchedule() {
         if(await this.scheduleChecker()) {
-            // this.updateSchedule();
-            // this.state.userSchedule.push(this.state.schedule);
-            //await this.setNewSchedule(this.state.schedule);
             let tempSchedule = this.state.userSchedule;
             let sch = this.state.schedule;
             if(this.state.userSchedule == undefined || this.state.userSchedule.length == 0){
                 tempSchedule[0] = sch;
-                //alert(sch);
             } else {
                 tempSchedule[this.state.userSchedule.length] = sch;
             }

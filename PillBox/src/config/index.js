@@ -20,7 +20,8 @@ export default {
         lightGreen: 'rgb(100, 255, 100)',
         darkGreen: 'rgb(1,135,26)'
     },
-    baseUrl: 'http://10.0.2.2:1234/',
+    // baseUrl: 'https://yggdrasil.ddns.net/api/master/',
+    baseUrl: 'http://localhost:1234/',
     user: {
         drugs: '',
         _id: '',

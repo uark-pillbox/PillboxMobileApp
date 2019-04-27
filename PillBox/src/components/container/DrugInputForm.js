@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, TouchableHighlight } from 'react-native'
 import config from '../../config';
 
 class DrugInputForm extends Component {
@@ -8,8 +8,25 @@ class DrugInputForm extends Component {
         super(props);
         this.state = {
             drug: '',
-            schedule: []
+            schedule: [],
+            drugSelection: '',
+            drugPickerDisplayed: false,
           };
+    }
+
+    setDrugValue(newDrugValue) {
+        this.setState({
+            drugSelection: newDrugValue,
+        }, () => {
+            this.toggleDrugPicker();
+            this.removeDrug();
+        });
+    }
+
+    toggleDrugPicker() {
+        this.setState({
+            drugPickerDisplayed: !this.state.drugPickerDisplayed
+        })
     }
 
     async addDrug() {
@@ -26,12 +43,9 @@ class DrugInputForm extends Component {
                     schedule: this.state.schedule
                     }),
                 });
-                // alert(JSON.stringify(response));
 
                 let status = response.status;
                 
-                // let responseData = response.text();
-
                 if(status === 200) {
                     alert("Drug added.");
                     let resJson = JSON.parse(response._bodyText);
@@ -39,8 +53,6 @@ class DrugInputForm extends Component {
                     config.user.drugs = drugs;
                 }
                 else {
-                    // alert(responseData)
-                    // alert(JSON.stringify(responseData));
                     alert("There was an error adding " + this.state.drug);
                 }
             return response;
@@ -59,15 +71,12 @@ class DrugInputForm extends Component {
                     'Authorization': 'Bearer ' + config.user.token,
                 },
                 body: JSON.stringify({
-                    name: this.state.drug,
+                    name: this.state.drugSelection,
                     }),
                 });
-                // alert(JSON.stringify(response));
 
                 let status = response.status;
                 
-                // let responseData = response.text();
-
                 if(status === 200) {
                     alert("Drug removed.");
                     let resJson = JSON.parse(response._bodyText);
@@ -75,8 +84,6 @@ class DrugInputForm extends Component {
                     config.user.drugs = drugs;
                 }
                 else {
-                    // alert(responseData)
-                    // alert(JSON.stringify(responseData));
                     alert("There was an error removing " + this.state.drug);
                 }
             return response;
@@ -114,9 +121,28 @@ class DrugInputForm extends Component {
                 <View>
                     <TouchableOpacity 
                         style={styles.buttons}
-                        onPress={()=> this.removeDrug()}>
+                        onPress={()=> this.toggleDrugPicker()}>
                             <Text style={styles.loginText}>Remove Drug</Text>
                     </TouchableOpacity>
+                </View>
+
+                <View>
+                    <Modal visible={this.state.drugPickerDisplayed} animationType={'fade'} transparent={true}>
+                        <View style={styles.modal}>
+                            <Text style={{fontWeight:'bold', fontSize: 14}}>Please pick a drug</Text>
+
+                            { config.user.drugs.map((value, index) => {
+                                return <TouchableHighlight key={index} onPress={() => this.setDrugValue(value.name)} style={styles.drugDisplay}>
+                                        <Text>{ value.name }</Text>
+                                    </TouchableHighlight>
+                            })}
+
+                            <TouchableHighlight onPress={() => this.toggleDrugPicker()} style={styles.drugDisplay}>
+                                <Text>Cancel</Text>
+                            </TouchableHighlight>
+
+                        </View>
+                    </Modal>
                 </View>
             </View>
             
@@ -144,6 +170,20 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: 'white',
     },
+    modal: {
+        backgroundColor: '#c0e2c9',
+        bottom: 55,
+        right: 20,
+        left: 20,
+        alignItems: 'center',
+        position: 'absolute',
+    },
+    drugDisplay: {
+        paddingTop: 4,
+        paddingBottom: 4,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: 'gray'
+    }
 });
 
 export default DrugInputForm;
