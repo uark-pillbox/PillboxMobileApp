@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Image } from 'react-native';
 import { LoginForm } from '../container';
 import config from '../../config';
 
@@ -12,7 +12,7 @@ class Login extends Component {
     render() {
         return (
             <KeyboardAvoidingView style={config.fullLayout}>
-                <Text style={{fontSize: 32}}>Pillbox App</Text>
+                <Image source={require('../../resources/logo.png')} style={{width: 100, height: 100, marginBottom: 15}} />
                 <LoginForm navigation={this.props.navigation}/>
                 <TouchableOpacity 
                     onPress={()=> this.signup()}>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { LoginForm } from '../container';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import config from '../../config';
 
 class Home extends Component {
@@ -8,14 +7,16 @@ class Home extends Component {
     render() {
         return (
             <View style={config.fullLayout}>
-				<Text style={styles.welcomeText}>Welcome {config.user.name}!</Text>
-				<Text style={{fontSize: 24}}>Username: {config.user.username}</Text>
-				<Text style={{fontSize: 24}}>Email: {config.user.email}</Text>
-                    <TouchableOpacity
-                        style={styles.buttons}>
-						<Text style={styles.loginText}>Change Information</Text>
-				</TouchableOpacity>
-			</View>
+                <Image source={require('../../resources/logo.png')} style={{width: 200, height: 200, marginBottom: 50}} />
+                <Text style={styles.welcomeText}>Welcome {config.user.name}!</Text>
+                <Text style={{ fontSize: 24 }}>Username: {config.user.username}</Text>
+                <Text style={{ fontSize: 24 }}>Email: {config.user.email}</Text>
+                <TouchableOpacity
+                    style={styles.buttons}>
+                    <Text style={styles.loginText}>Change Information</Text>
+                </TouchableOpacity>
+            </View>
+            
         )
     }
 }
