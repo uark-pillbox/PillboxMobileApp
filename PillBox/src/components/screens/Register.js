@@ -7,12 +7,9 @@ class Register extends Component {
 
     render() {
         return (
-            <View style = {config.fullLayout}>
-                <View>
-                    <Text style={styles.registerText}>Registration</Text>
-                </View>
-                
+            <View style = {config.fullLayout}>                
                 <KeyboardAvoidingView style={config.fullLayout}>
+                    <Text style={styles.registerText}>Registration</Text>
 				    <RegisterForm navigation={this.props.navigation}/>
                 </KeyboardAvoidingView>
             </View>

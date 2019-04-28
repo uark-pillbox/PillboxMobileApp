@@ -8,12 +8,12 @@ class Interactions extends Component {
     render() {
         return (
             <View style={styles.interactionsLayout}>
-                    <Text style={{fontSize: 32}}>Interactions</Text>
+                    <Text style={{fontSize: 32, color: 'white'}}>Interactions</Text>
                     <View
                     style={{
                         height: 2,
                         width: "100%",
-                        backgroundColor: config.colors.darkGreen,
+                        backgroundColor: config.colors.lightBlue,
                     }}
                 />
                 <InteractionsPresentation/>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent:'flex-start',
         alignItems:'center',
-        backgroundColor: 'rgb(100,255,100)'
+        backgroundColor: config.colors.lightBlue
     }
 });
 

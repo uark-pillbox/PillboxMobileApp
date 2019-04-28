@@ -104,7 +104,9 @@ const styles = StyleSheet.create({
         height: 40,
         marginBottom: 10,
         padding: 10,
-        fontSize: 20
+        fontSize: 20,
+        borderWidth: 1,
+        borderColor: config.colors.darkGreen 
     },
     buttons: {
         height: 55,
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
         padding: 10,
-        backgroundColor: config.colors.darkGreen
+        backgroundColor: config.colors.lightBlue
     },
     loginText: {
         fontSize: 24,

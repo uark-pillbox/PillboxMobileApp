@@ -5,8 +5,6 @@ import config from '../../config';
 class Logout extends Component {
 
     logout() {
-        // TODO
-        // Call the API logout route to logout the user from the session
         this.props.navigation.navigate('login');
     }
 
@@ -32,7 +30,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
         padding: 10,
-        backgroundColor: config.colors.darkGreen
+        backgroundColor: config.colors.lightBlue
     },
     logoutText: {
         fontSize: 24,

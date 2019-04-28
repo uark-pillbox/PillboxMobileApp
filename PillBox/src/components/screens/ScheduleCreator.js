@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
         padding: 10,
-        backgroundColor: config.colors.darkGreen
+        backgroundColor: config.colors.lightBlue
     },
     buttonText: {
         fontSize: 24,

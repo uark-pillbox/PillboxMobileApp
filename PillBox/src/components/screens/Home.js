@@ -13,7 +13,7 @@ class Home extends Component {
                 <Text style={{ fontSize: 24 }}>Email: {config.user.email}</Text>
                 <TouchableOpacity
                     style={styles.buttons}>
-                    <Text style={styles.loginText}>Change Information</Text>
+                    <Text style={styles.buttonText}>Change Information</Text>
                 </TouchableOpacity>
             </View>
             
@@ -29,16 +29,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
         padding: 10,
-        backgroundColor: config.colors.darkGreen
+        backgroundColor: config.colors.lightBlue
     },
-    loginText: {
+    buttonText: {
         fontSize: 24,
         color: 'white',
 	},
 	welcomeText: {
 		fontSize: 38,
 		height: 55,
-		color: '#228b22',
 	}
 });
 

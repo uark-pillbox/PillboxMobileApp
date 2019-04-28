@@ -5,7 +5,7 @@ export default {
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor: 'rgb(100,255,100)'
+        backgroundColor: 'white'
     },
     formLayout: {
         height:50,
@@ -18,7 +18,8 @@ export default {
     },
     colors: {
         lightGreen: 'rgb(100, 255, 100)',
-        darkGreen: 'rgb(1,135,26)'
+        darkGreen: 'rgb(1,135,26)',
+        lightBlue: 'rgb(124,199,232)'
     },
     baseUrl: 'http://10.0.2.2:1234/',
     // baseUrl: 'https://yggdrasil.ddns.net/api/master/'

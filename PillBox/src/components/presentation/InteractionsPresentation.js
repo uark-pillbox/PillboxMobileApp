@@ -61,14 +61,14 @@ class InteractionsPresentation extends Component {
                 data={this.state.data}
                 keyExtractor={(item, index) => item.Id.toString()}
                 renderItem={({ item }) => (
-                    <View>
+                    <View style={{backgroundColor: 'white'}}>
                         <Text style={styles.drugNameText}>{item.DrugName1} : {item.DrugName2}</Text>
                         <Text style={styles.descriptionText}>{item.Description}</Text>
                         <View
                             style={{
                                 height: 2,
                                 width: "100%",
-                                backgroundColor: config.colors.darkGreen,
+                                backgroundColor: config.colors.lightBlue,
                             }}
                         />
                     </View>
