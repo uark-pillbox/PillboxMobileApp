@@ -83,12 +83,38 @@ class ScheduleCreator extends Component {
         return false;
     }
 
-    // removeSchedule() {
-    //     this.setState({
-    //         schedule: '',
-    //     })
-    //     this.submitSchedule()
-    // }
+    async removeSchedule() {
+        try {            
+            let response = await fetch(config.baseUrl + "drugs/changeSchedule", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + config.user.token,
+                },
+                body: JSON.stringify({
+                    name: this.state.drugSelection,
+                    schedule: []
+                    }),
+                });
+    
+                let status = response.status;
+                        
+                if(status === 200) {
+                        alert("Schedule deleted.");
+                    let resJson = JSON.parse(response._bodyText);
+                    let drugs = resJson.drugs;
+                    config.user.drugs = drugs;
+                }
+                else {
+                    // alert(JSON.stringify(response));
+                    alert("There was an error Deleting the Schedule.")
+                }
+            return response;
+        } catch(error) {
+            console.error(error);
+        }
+    }
 
     async submitSchedule() {
         if(await this.scheduleChecker()) {
@@ -117,18 +143,14 @@ class ScheduleCreator extends Component {
                     let status = response.status;
                             
                     if(status === 200) {
-                        if(this.state.schedule.length > 0) {
-                            alert("Schedule added.");
-                        } else {
-                            alert("Schedule deleted.")
-                        }
+                        alert("Schedule added.");
                         let resJson = JSON.parse(response._bodyText);
                         let drugs = resJson.drugs;
                         config.user.drugs = drugs;
                     }
                     else {
                         // alert(JSON.stringify(response));
-                        alert("There was an error Adding/Deleting the Schedule.")
+                        alert("There was an error Adding the Schedule.")
                     }
                 return response;
             } catch(error) {
@@ -163,9 +185,9 @@ class ScheduleCreator extends Component {
                     <Text style={styles.buttonText}>Submit Schedule</Text>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity style={styles.buttons} onPress={() => this.removeSchedule()}>
-                    <Text style={styles.buttonText}>Delete Schedule</Text>
-                </TouchableOpacity> */}
+                <TouchableOpacity style={styles.buttons} onPress={() => this.removeSchedule()}>
+                    <Text style={{fontSize: 18, color: 'white'}}>Delete {this.state.drugSelection} Schedules</Text>
+                </TouchableOpacity>
 
                 <Modal visible={this.state.drugPickerDisplayed} animationType={'fade'} transparent={true}>
                     <View style={styles.modal}>
