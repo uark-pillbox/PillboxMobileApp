@@ -4,6 +4,10 @@ import config from '../../config';
 
 class Home extends Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <View style={config.fullLayout}>
@@ -12,7 +16,8 @@ class Home extends Component {
                 <Text style={{ fontSize: 24 }}>Username: {config.user.username}</Text>
                 <Text style={{ fontSize: 24 }}>Email: {config.user.email}</Text>
                 <TouchableOpacity
-                    style={styles.buttons}>
+                    style={styles.buttons}
+                    onPress={() => this.props.navigation.navigate('changeInformation')}>
                     <Text style={styles.buttonText}>Change Information</Text>
                 </TouchableOpacity>
             </View>

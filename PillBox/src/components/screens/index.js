@@ -6,6 +6,7 @@ import DrugInput from './DrugInput'
 import ScheduleCreator from './ScheduleCreator'
 import ScheduleViewer from './ScheduleViewer'
 import Logout from './Logout'
+import ChangeInformation from './ChangeInformation'
 
 export {
     Home,
@@ -15,5 +16,6 @@ export {
     DrugInput,
     ScheduleCreator,
     ScheduleViewer,
-    Logout
+    Logout,
+    ChangeInformation
 };

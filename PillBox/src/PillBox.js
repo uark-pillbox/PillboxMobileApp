@@ -1,4 +1,4 @@
-import { Login, Register, Home, ScheduleCreator, ScheduleViewer, DrugInput, Interactions, Logout } from './components/screens'
+import { Login, Register, Home, ScheduleCreator, ScheduleViewer, DrugInput, Interactions, Logout, ChangeInformation } from './components/screens'
 import { createSwitchNavigator, createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 
 
@@ -11,6 +11,13 @@ const HomeTabs = createBottomTabNavigator({
     logout: Logout
 });
 
+const HomeStack = createStackNavigator({
+    home: HomeTabs,
+    changeInformation: ChangeInformation
+}, {
+    initialRouteName: 'home',
+});
+
 const SignIn = createStackNavigator({
     login: Login,
     register: Register
@@ -20,7 +27,7 @@ const SignIn = createStackNavigator({
 
 const MainStack = createSwitchNavigator({
     signin: SignIn,
-    home: HomeTabs 
+    home: HomeStack 
 }, {
     initialRouteName: 'signin',
 });
