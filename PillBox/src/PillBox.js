@@ -9,17 +9,62 @@ const HomeTabs = createBottomTabNavigator({
         screen: Home,
         navigationOptions: {
             tabBarLabel: "Home",
-            tabBarIcon: ({tintColor}) => (
+            tabBarIcon: () => (
                 <Image
                     source={require('./resources/home.png')}/>
             )
         }
     },
-    drugInput: DrugInput,
-    scheduler: ScheduleCreator,
-    viewer: ScheduleViewer,
-    interactions: Interactions,
-    logout: Logout
+    Input: {
+        screen: DrugInput,
+        navigationOptions: {
+            tabBarLabel: "Input",
+            tabBarIcon: () => (
+                <Image
+                    source={require('./resources/drugInput.png')}/>
+            )
+        }
+    },
+    Scheduler: {
+        screen: ScheduleCreator,
+        navigationOptions: {
+            tabBarLabel: "Scheduler",
+            tabBarIcon: () => (
+                <Image
+                    source={require('./resources/scheduleCreator.png')}/>
+            )
+        }
+    },
+    Viewer: {
+        screen: ScheduleViewer,
+        navigationOptions: {
+            tabBarLabel: "Viewer",
+            tabBarIcon: () => (
+                <Image
+                    source={require('./resources/scheduleViewer.png')}/>
+            )
+        }
+    },
+    Interactions: {
+        screen: Interactions,
+        navigationOptions: {
+            tabBarLabel: "Interactions",
+            tabBarIcon: () => (
+                <Image
+                    source={require('./resources/interactions.png')}/>
+            )
+        }
+    },
+    Logout: {
+        screen: Logout,
+        navigationOptions: {
+            tabBarLabel: "Logout",
+            tabBarIcon: () => (
+                <Image
+                    source={require('./resources/logout.png')}/>
+            )
+        }
+    }
 });
 
 const HomeStack = createStackNavigator({
@@ -27,6 +72,10 @@ const HomeStack = createStackNavigator({
     changeInformation: ChangeInformation
 }, {
     initialRouteName: 'home',
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
 });
 
 const SignIn = createStackNavigator({
@@ -38,7 +87,7 @@ const SignIn = createStackNavigator({
 
 const MainStack = createSwitchNavigator({
     signin: SignIn,
-    home: HomeTabs 
+    home: HomeStack 
 }, {
     initialRouteName: 'signin',
 });
